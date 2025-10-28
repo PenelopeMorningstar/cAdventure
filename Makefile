@@ -3,12 +3,13 @@ CXXFLAGS := -Wall -Wextra -std=c++17
 
 MSYS2_ROOT ?= C:/msys64
 
-INCLUDES := -I$(MSYS2_PATH)/include
-LDFLAGS  := -L$(MSYS2_PATH)/lib
+INCLUDES := -I$(MSYS2_PATH)/include -Iinclude
+LDFLAGS  := -L$(MSYS2_PATH)/lib -mconsole
 LIBS := -lglfw3 -lglew32 -lopengl32
 
-SRC := main.cpp
-TARGET := window.exe
+SRC := $(wildcard src/*.cpp) \
+       $(wildcard src/renderer/*.cpp)
+TARGET := bin/window.exe
 
 all: $(TARGET)
 
