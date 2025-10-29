@@ -10,15 +10,20 @@
 class OpenGLRenderer : public AbstractRenderer
 {
     public:
-        std::string display_title;
-        int width;
-        int height;
-        GLFWwindow* window;
-        glm::mat4 projection;
-
         bool ConfigureDisplay();
+        void Exit();
         bool CreateDisplay();
         void DrawRect(int left, int top, int width, int height);
         void DrawRect(int left, int top, int width, int height, float rotation);
+        void Update();
     private:
+        std::string display_title_ = "Test";
+        int screen_width_ = 800;
+        int screen_height_ = 600;
+        glm::mat4 projection_;
+        GLFWwindow* window_;
+
+        unsigned int rect_vao_;
+        unsigned int rect_vbo_;
+        unsigned int rect_ebo_;
 };
