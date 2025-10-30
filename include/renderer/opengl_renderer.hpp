@@ -4,8 +4,18 @@
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
 
+#include <stdio.h>
+#include <unordered_map>
+#include <vector>
+
 #include "common.hpp"
 #include "renderer/abstract_renderer.hpp"
+
+struct ColoredRectCall{
+    RectTransform transform;
+    Color color;
+    float rotation;
+};
 
 class OpenGLRenderer : public AbstractRenderer
 {
@@ -13,8 +23,8 @@ class OpenGLRenderer : public AbstractRenderer
         bool ConfigureDisplay();
         void Exit();
         bool CreateDisplay();
-        void DrawRect(int left, int top, int width, int height);
-        void DrawRect(int left, int top, int width, int height, float rotation);
+        void DrawRect(RectTransform& transform, Color& color);
+        void DrawRect(RectTransform& transform, Color& color, float rotation);
         void Update();
     private:
         std::string display_title_ = "Test";
@@ -26,4 +36,10 @@ class OpenGLRenderer : public AbstractRenderer
         unsigned int rect_vao_;
         unsigned int rect_vbo_;
         unsigned int rect_ebo_;
+        unsigned int colored_rect_program;
+        unsigned int colored_rect_projection_i;
+        unsigned int colored_rect_ltwh_i;
+        unsigned int colored_rect_color_i;
+        unsigned int colored_rect_rotation_i;
+        std::vector<ColoredRectCall> colored_rects = {};
 };

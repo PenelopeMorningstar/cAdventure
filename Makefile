@@ -8,7 +8,10 @@ LDFLAGS  := -L$(MSYS2_PATH)/lib -mconsole
 LIBS := -lglfw3 -lglew32 -lopengl32
 
 SRC := $(wildcard src/*.cpp) \
-       $(wildcard src/renderer/*.cpp)
+       $(wildcard src/renderer/*.cpp) \
+	   $(wildcard src/audio/*.cpp) \
+	   $(wildcard src/input/*.cpp) \
+	   $(wildcard src/time/*.cpp)
 TARGET := bin/window.exe
 
 all: $(TARGET)
