@@ -1,9 +1,4 @@
 #pragma once
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/ext.hpp>
-
 #include <stdio.h>
 #include <unordered_map>
 #include <vector>
@@ -31,8 +26,7 @@ class OpenGLRenderer : public AbstractRenderer
         int screen_width_ = 800;
         int screen_height_ = 600;
         glm::mat4 projection_;
-        GLFWwindow* window_;
-
+        
         unsigned int rect_vao_;
         unsigned int rect_vbo_;
         unsigned int rect_ebo_;

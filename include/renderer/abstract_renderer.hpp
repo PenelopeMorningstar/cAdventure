@@ -12,5 +12,6 @@ class AbstractRenderer
         virtual void DrawRect(RectTransform& transform, Color& color) = 0;
         virtual void DrawRect(RectTransform& transform, Color& color, float rotation) = 0;
         virtual void Update() = 0;
+        GLFWwindow* window_;
     private:
 };

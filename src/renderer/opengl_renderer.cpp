@@ -124,7 +124,6 @@ void OpenGLRenderer::Update(){
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-
     glUseProgram(colored_rect_program);
     glBindVertexArray(rect_vao_);
     glUniformMatrix4fv(colored_rect_projection_i, 1, GL_FALSE, glm::value_ptr(projection_));
