@@ -12,6 +12,10 @@
 #include "input/input.hpp"
 #include "time/time.hpp"
 
+// used for printing
+#include <iostream>
+#include <iomanip>
+
 struct Color
 {
     float r,g,b,a;
@@ -33,3 +37,5 @@ extern AudioManager* g_audio_manager;
 extern InputManager* g_input_manager;
 extern TimeManager* g_time_manager;
 
+
+void print_float(float my_float);
