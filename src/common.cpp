@@ -14,6 +14,8 @@ AudioManager* g_audio_manager = new AudioManager();
 
 TimeManager* g_time_manager = new TimeManager();
 
+TextureManager* g_texture_manager = new TextureManager();
+
 
 void print_float(float my_float){
     std::cout.precision(20);

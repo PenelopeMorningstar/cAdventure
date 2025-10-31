@@ -3,7 +3,7 @@ CXXFLAGS := -Wall -Wextra -std=c++17
 
 MSYS2_ROOT ?= C:/msys64
 
-INCLUDES := -I$(MSYS2_PATH)/include -Iinclude
+INCLUDES := -I$(MSYS2_PATH)/include -Iinclude -Ilib
 LDFLAGS  := -L$(MSYS2_PATH)/lib -mconsole
 LIBS := -lglfw3 -lglew32 -lopengl32
 

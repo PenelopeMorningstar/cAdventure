@@ -5,10 +5,12 @@
 
 #include "common.hpp"
 #include "renderer/abstract_renderer.hpp"
+struct Texture;
 
 struct ColoredRectCall{
     RectTransform transform;
     Color color;
+    Texture* texture;
     float rotation;
 };
 
@@ -19,7 +21,10 @@ class OpenGLRenderer : public AbstractRenderer
         void Exit();
         bool CreateDisplay();
         void DrawRect(RectTransform& transform, Color& color);
+        void DrawRect(RectTransform& transform, Color& color, Texture* texture);
+        void DrawRect(RectTransform& transform, Color& color, Texture* texture, float rotation);
         void DrawRect(RectTransform& transform, Color& color, float rotation);
+        void InitTexture(Texture* texture);
         void Update();
     private:
         std::string display_title_ = "Test";

@@ -17,9 +17,15 @@ const char* COLORED_RECT_VERTEX_SHADER =
     R"glsl(
     #version 330 core
     layout (location = 0) in vec3 aPos;
+    layout (location = 1) in vec2 aTexCoord;
+    
+    out vec2 TexCoord;
+    
     uniform mat4 projection;
     uniform vec4 ltwh;
     uniform float rotation;
+
+
 
     void main()
     {
@@ -30,18 +36,25 @@ const char* COLORED_RECT_VERTEX_SHADER =
                         sin(rotation), cos(rotation));
         pos = center + rot * (pos - center);
         gl_Position = projection * vec4(pos, 0.0, 1.0);
+        TexCoord = aPos.xy;
     }
     )glsl";
 
 const char* COLORED_RECT_FRAGMENT_SHADER =
     R"glsl(
     #version 330 core
+
+    in vec2 TexCoord;
+    
     out vec4 FragColor;
+    
+    uniform sampler2D tex;
     uniform vec4 color;
+    
 
     void main()
     {
-        FragColor = vec4(0,1,0,1.0);
+        FragColor = texture(tex, TexCoord) * color;
     }
     )glsl";
 
@@ -110,14 +123,19 @@ bool OpenGLRenderer::CreateDisplay(){
 
 void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color){
     
-    DrawRect(transform, color, 0);
+    DrawRect(transform, color, nullptr, 0);
 }
 
 void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color, float rotation){
 
-    colored_rects.push_back({transform, color, rotation});
+    DrawRect(transform,color,nullptr,rotation);
+}
 
-
+void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color, Texture* texture){
+    DrawRect(transform,color,texture,0);
+}
+void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color, Texture* texture, float rotation){
+    colored_rects.push_back({transform, color, texture, rotation});
 }
 
 void OpenGLRenderer::Update(){
@@ -133,6 +151,7 @@ void OpenGLRenderer::Update(){
         glUniform4f(colored_rect_ltwh_i, c.transform.l, c.transform.t, c.transform.w, c.transform.h);
         glUniform4f(colored_rect_color_i, c.color.r, c.color.g, c.color.b, c.color.a);
         glUniform1f(colored_rect_rotation_i, c.rotation);
+        
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
 
@@ -142,4 +161,19 @@ void OpenGLRenderer::Update(){
     if (glfwWindowShouldClose(window_)) {
         g_game_manager->is_running_ = false;
     }
+}
+
+void OpenGLRenderer::InitTexture(Texture* texture){
+
+    glGenTextures(1,&texture->texture_id);
+    glBindTexture(GL_TEXTURE_2D, texture->texture_id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    GLenum format = (texture->n_channels == 4) ? GL_RGBA : GL_RGB;
+    glTexImage2D(GL_TEXTURE_2D, 0, format, texture->width, texture->height, 0, format, GL_UNSIGNED_BYTE, texture->data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
 }
