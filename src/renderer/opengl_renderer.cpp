@@ -151,6 +151,18 @@ void OpenGLRenderer::Update(){
         glUniform4f(colored_rect_ltwh_i, c.transform.l, c.transform.t, c.transform.w, c.transform.h);
         glUniform4f(colored_rect_color_i, c.color.r, c.color.g, c.color.b, c.color.a);
         glUniform1f(colored_rect_rotation_i, c.rotation);
+
+            glBindTexture(GL_TEXTURE_2D, c.texture->texture_id);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            GLenum format = (c.texture->n_channels == 4) ? GL_RGBA : GL_RGB;
+            glTexImage2D(GL_TEXTURE_2D, 0, format, c.texture->width, c.texture->height, 0, format, GL_UNSIGNED_BYTE, c.texture->data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+        //set textures
+        
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
@@ -177,3 +189,4 @@ void OpenGLRenderer::InitTexture(Texture* texture){
     glGenerateMipmap(GL_TEXTURE_2D);
 
 }
+
