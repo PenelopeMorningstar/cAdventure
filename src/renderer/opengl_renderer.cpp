@@ -128,12 +128,13 @@ void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color){
 
 void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color, float rotation){
 
-    DrawRect(transform,color,nullptr,rotation);
+    DrawRect(transform, color, nullptr, rotation);
 }
 
 void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color, Texture* texture){
-    DrawRect(transform,color,texture,0);
+    DrawRect(transform, color, texture, 0);
 }
+
 void OpenGLRenderer::DrawRect(RectTransform& transform, Color& color, Texture* texture, float rotation){
     colored_rects.push_back({transform, color, texture, rotation});
 }

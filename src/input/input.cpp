@@ -1,6 +1,7 @@
 #include "input/input.hpp"
 #include "input/io_key.hpp"
 
+
 InputManager::InputManager() {
     keys_ = {
         {"left", new IOKey(0x41)},

@@ -4,8 +4,8 @@
 
 void TextureManager::RegisterTexture(std::string key, std::string src){
     int width, height, n_channels;
-    unsigned char* data = stbi_load(src.c_str(), &width, &height, &n_channels,0);
-    textures_[key] = {data,width,height,n_channels, 0};
+    unsigned char* data = stbi_load(src.c_str(), &width, &height, &n_channels, 0);
+    textures_[key] = {data, width, height, n_channels, 0};
     g_render->InitTexture(&textures_.at(key));
 
 }
