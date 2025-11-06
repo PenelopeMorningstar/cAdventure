@@ -16,14 +16,19 @@ int main() {
     Color c = {1.0,1.0,1.0,1.0};
     RectTransform r2 = {110,10,200,100};
 
+    int cursor_x;
+
     while (g_game_manager->is_running_) {
         g_render->DrawRect(t, c, &g_texture_manager->GetTexture("pumpkin"), 0.0f);
         g_render->DrawRect(r2, c, &g_texture_manager->GetTexture("white"), 45.0f);
 
-
-        print_float(g_time_manager->fps_);
+        // cursor_x = g_cursor_manager->x_pos_;
+        cursor_x = g_cursor_manager->GetXPos();
+        // cursor_x = g_input_manager->GetAnalogAxisValue("cursor_x");
+        printf("%d\n", cursor_x);
 
         g_time_manager->Update();
+        g_cursor_manager->Update();
         g_input_manager->Update();
         g_render->Update();
     }

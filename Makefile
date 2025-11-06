@@ -10,6 +10,7 @@ LIBS := -lglfw3 -lglew32 -lopengl32
 SRC := $(wildcard src/*.cpp) \
        $(wildcard src/renderer/*.cpp) \
 	   $(wildcard src/audio/*.cpp) \
+	   $(wildcard src/ui/*.cpp) \
 	   $(wildcard src/input/*.cpp) \
 	   $(wildcard src/time/*.cpp)
 TARGET := bin/window.exe
